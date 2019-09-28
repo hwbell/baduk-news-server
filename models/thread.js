@@ -21,7 +21,7 @@ const threadSchema = new mongoose.Schema({
     type: Date,
     default: new Date()
   },
-  article: {
+  game: {
     type: Object,
     required: true,
     validate(obj) {
@@ -32,11 +32,10 @@ const threadSchema = new mongoose.Schema({
   },
   paragraph: {
     type: String,
-    // required: true,
+    required: true,
   },
   comments: {
     type: Array,
-    // required: true,
     default: []
   },
   commentsCount: {
@@ -46,6 +45,11 @@ const threadSchema = new mongoose.Schema({
   likes: {
     type: Number,
     default: 0
+  },
+  tags: {
+    type: Array,
+    required: true,
+    default: ['#go']
   }
 })
 

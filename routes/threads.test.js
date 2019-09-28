@@ -2,7 +2,7 @@ const app = require('../app');
 const Thread = require('../models/thread.js');
 const { compareDates } = require('../tools/helperFunctions');
 
-const { userOne, userTwo, userThree, threadOne, threadTwo, setupDatabase } = require('./testSetup/db');
+const { userOne, userTwo, invalidThreadOne, invalidThreadTwo, threadOne, threadTwo, setupDatabase } = require('./testSetup/db');
 
 // use supertest for route testing
 const request = require('supertest');
@@ -22,6 +22,18 @@ describe('Threads endpoints', () => {
     expect(thread.name).toBe(threadTwo.name)
 
     expect(post.body.name).toBe(threadTwo.name)
+  });
+
+  it('should not post an invalid thread', async () => {
+    const post = await request(app)
+    .post('/threads')
+    .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+    .send(invalidThreadOne)
+    .expect(400)
+  // console.log(response.body)
+
+    const thread = await Thread.findOne({ _id: invalidThreadOne._id });
+    expect(thread).toBeNull();
   })
 
   it('should get all threads according to date sorter', async () => {
