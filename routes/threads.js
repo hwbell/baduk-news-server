@@ -23,7 +23,7 @@ router.post('/', auth, async (req, res, next) => {
 })
 
 // GET threads (all) with the page + sortBy params. 
-// sort the threads accordingly, and send back the page wanted
+// sort the threads accordingly, and send back the page requested
 router.get('/all/:sortBy/:page', async (req, res, next) => {
 
   let { sortBy, page } = req.params;
@@ -193,7 +193,7 @@ router.patch('/comments/:id', auth, async (req, res, next) => {
 /* DELETE a user's thread */
 router.delete('/:id', auth, async (req, res) => {
   try {
-    const thread = await Thread.findOneAndDelete({ _id: req.params.id, owner: req.user._id })
+    const thread = await Thread.findOneAndDelete({ _id: req.params.id, owner: req.user._id });
 
     if (!thread) {
       return res.status(404).send();

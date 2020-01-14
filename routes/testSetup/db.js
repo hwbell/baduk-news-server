@@ -25,6 +25,8 @@ function randomDate(start, end) {
 const userOne = {
   _id: userOneId,
   name: "Jeff",
+  rank: "5kyu",
+  picture: `s3.url-${Math.random().toString()}`,
   password: "regexmixup",
   email: "mogget@mail.com",
   tokens: [
@@ -36,6 +38,8 @@ const userOne = {
 const userTwo = {
   _id: userTwoId,
   name: "Mark",
+  rank: "5dan",
+  picture: `s3.url-${Math.random().toString()}`,
   password: "asufrubf!!!",
   email: "mark@mail.com",
   tokens: [
@@ -47,6 +51,8 @@ const userTwo = {
 const userThree = {
   _id: userThreeId,
   name: "Duder",
+  rank: "2kyu",
+  picture: `s3.url-${Math.random().toString()}`,
   password: "asufrubf!!!",
   email: "maduder@mail.com",
   tokens: [
@@ -107,9 +113,7 @@ const threadOne = {
   user: userOne.name,
   _id: collectionOneId,
   name: `Shin Jinseo dominates (again)`,
-  game: {
-    url: "s3.url"
-  },
+  picture: `s3.url-${Math.random().toString()}`,
   comments: [
     {
       user: userTwo.name,
@@ -127,9 +131,7 @@ const threadTwo = {
   user: userTwo.name,
   _id: collectionTwoId,
   name: `Lee Changho slays a dragon`,
-  game: {
-    url: "s3.url"
-  },
+  picture: `s3.url-${Math.random().toString()}`,
   comments: [
     {
       user: userOne.name,
@@ -148,9 +150,7 @@ for (let i = 0; i < 30; i++) {
     user: `user-${i + 1}`,
     _id: new mongoose.Types.ObjectId(),
     name: Math.random().toString(),
-    game: {
-      url: "s3.url"
-    },
+    picture: `s3.url-${Math.random().toString()}`,
     paragraph: `Perhaps a bit uncharacteristic of stone buddha, he kills a very large group for the victory.
   I think the game was actually very close, but black left something open and lost.`,
     tags: ["#leechangho", "#changhao", "#killing"],
@@ -173,9 +173,7 @@ const invalidThreadOne = {
   user: userOne.name,
   _id: randomId,
   name: `Shin Jinseo dominates (again)`,
-  // game: {
-  //   url: 's3.url'
-  // },
+  picture: `s3.url-${Math.random().toString()}`,
   comments: [
     {
       user: userTwo.name,
@@ -189,9 +187,7 @@ const invalidThreadTwo = {
   user: userTwo.name,
   _id: randomId,
   name: `Lee Changho slays a dragon`,
-  // game: {
-  //   url: 's3.url'
-  // },
+  picture: `s3.url-${Math.random().toString()}`,
   comments: [
     {
       user: userOne.name,
@@ -216,7 +212,7 @@ const setupDatabase = async () => {
   // save one collection with userTwo as its owner
   await new Collection(collectionTwo).save();
 
-  // save one collection with userTwo as its owner
+  // save another collection with userTwo as its owner
   await new Collection(collectionThree).save();
 
   // // save one thread with userOne as its owner

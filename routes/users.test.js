@@ -18,6 +18,7 @@ describe('Users endpoints', () => {
       .post('/users')
       .send({
         name: 'Charles',
+        rank: "5kyu",
         password: 'regexmixup',
         email: 'harrybell@mail.com'
       })
@@ -119,9 +120,10 @@ describe('Users endpoints', () => {
 
     let userPatch = {
       about: "Hi, my name is Mark! I am a chemist at UCSF.",
-      research: 'Biology, Neurology',
-      affiliations: 'University of California',
-      interests: 'science, medicine, artificial intelligence, history, travel'
+      // research: 'Biology, Neurology',
+      // affiliations: 'University of California',
+      interests: 'science, medicine, artificial intelligence, history, travel',
+
     }
 
     const response = await request(app)
@@ -149,8 +151,6 @@ describe('Users endpoints', () => {
       .expect(400)
 
   })
-
-
 
   it('should not get profile for user without token', async () => {
     await request(app)

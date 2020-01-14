@@ -7,20 +7,9 @@ const Collection = require('./collection')
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    // unique: true,
-    // required: true,
-    trim: true
-  },
-  password: {
-    type: String,
+    unique: true,
     required: true,
-    minlength: 7,
-    trim: true,
-    validate(value) {
-      if (value.toLowerCase().includes('password')) {
-        throw new Error('Password cannot contain the word "password", thats crazy')
-      }
-    }
+    trim: true
   },
   email: {
     type: String,
@@ -34,27 +23,52 @@ const userSchema = new mongoose.Schema({
       }
     }
   },
-  age: {
-    type: Number,
-    default: 0,
+  password: {
+    type: String,
+    required: true,
+    minlength: 7,
+    trim: true,
     validate(value) {
-      if (value < 0) {
-        throw new Error('Age must be a positive number!')
+      if (value.toLowerCase().includes('password')) {
+        throw new Error('Password cannot contain the word "password", thats crazy')
+      }
+    }
+  },
+  rank: {
+    type: String,
+    required: true,
+    trim: true,
+    validate(value) {
+      if (!value) {
+        throw new Error('You must declare a rank!')
       }
     }
   },
   about: {
     type: String
   },
-  research: {
-    type: String
-  },
-  affiliations: {
-    type: String
-  },
   interests: {
     type: String
   },
+  // this will just be a string of the s3 url
+  // it isn't required to be unique since many users will not upload a photo => picture will be null for all these
+  picture: {
+    type: String, 
+  },
+  reviews: {
+    type: String, 
+
+  },
+  articles: {
+
+  },
+  comments: {
+
+  },
+  links: {
+
+  },
+
 
   tokens: [
     { 
@@ -66,8 +80,8 @@ const userSchema = new mongoose.Schema({
   ]
 })
 
-userSchema.virtual('collections', {
-  ref: 'Collection',
+userSchema.virtual('threads', {
+  ref: 'Thread',
   localField: '_id',
   foreignField: 'owner'
 })

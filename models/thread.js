@@ -2,11 +2,6 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 
 const threadSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    unique: true,
-    required: true,
-  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
@@ -21,14 +16,15 @@ const threadSchema = new mongoose.Schema({
     type: Date,
     default: new Date()
   },
-  game: {
-    type: Object,
+  name: {
+    type: String,
+    unique: true,
     required: true,
-    validate(obj) {
-      if (!obj) {
-        throw new Error('Need an article to start thread')
-      }
-    }
+  },
+  picture: {
+    type: String,
+    unique: true,
+    // required: true,
   },
   paragraph: {
     type: String,
