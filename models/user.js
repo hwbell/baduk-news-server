@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const Collection = require('./collection')
+// const Collection = require('./collection')
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
     trim: true,
     validate(value) {
       if (value.toLowerCase().includes('password')) {
-        throw new Error('Password cannot contain the word "password", thats crazy')
+        throw new Error('Password cannot contain the word "password", thats crazy!')
       }
     }
   },
@@ -51,23 +51,27 @@ const userSchema = new mongoose.Schema({
     type: String
   },
   // this will just be a string of the s3 url
-  // it isn't required to be unique since many users will not upload a photo => picture will be null for all these
+  // it isn't required to be unique since many users will NOT upload a photo => picture will be null for all these
   picture: {
     type: String, 
   },
+  // an array of ref strings to be used to fetch each review
   reviews: {
-    type: String, 
-
+    type: Array,
+    default: []
   },
   articles: {
-
+    type: Array,
+    default: []
   },
   comments: {
-
+    type: Array,
+    default: []
   },
   links: {
-
-  },
+    type: Array,
+    default: []
+  },  
 
 
   tokens: [
@@ -138,13 +142,13 @@ userSchema.pre('save', async function (next) {
 })
 
 // Delete the user's collections if they delete their profile
-userSchema.pre('remove', async function (next) {
-  const user = this;
+// userSchema.pre('remove', async function (next) {
+//   const user = this;
 
-  await Collection.deleteMany({ owner: user._id});
+//   await Collection.deleteMany({ owner: user._id});
 
-  next();
-})
+//   next();
+// })
 
 const User = mongoose.model('User', userSchema);
 User.createIndexes();

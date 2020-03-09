@@ -12,6 +12,7 @@ router.post('/', async (req, res, next) => {
 
   try {
     await user.save();
+    console.log('user saved')
     const token = await user.generateAuthToken()
     res.status(201).send({ user, token });
   } catch (e) {
