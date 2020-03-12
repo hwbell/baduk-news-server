@@ -3,7 +3,28 @@ var router = express.Router();
 
 require('../db/mongoose');
 const User = require('../models/user');
+const Thread = require('../models/thread');
 const auth = require('../middleware/auth');
+
+// get basic site info for users - count, etc.
+router.get('/all', async (req, res) => {
+
+  try { 
+    const users = await User.find({});
+    const threads = await Thread.find({});
+    // const reviews = await User.find({});
+    const userCount = users.length;
+    const threadCount = threads.length;
+    res.send({ 
+      users: userCount,
+      articles: threadCount
+    });
+
+  } catch(e) {
+    res.status(400).send(e);
+  }
+})
+
 
 /* POST a new user */
 router.post('/', async (req, res, next) => {

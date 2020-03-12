@@ -12,6 +12,16 @@ describe('Users endpoints', () => {
 
   beforeEach(setupDatabase);
 
+
+  it('should get info for all users on the site', async () => {
+    // use the same route as in the actual app
+    const response = await request(app)
+      .get('/users/all')
+      .expect(200)
+
+    
+  })
+
   it('should post a new user', async () => {
     // use the same route as in the actual app
     const response = await request(app)
