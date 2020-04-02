@@ -44,6 +44,7 @@ router.post('/', async (req, res, next) => {
 
 // login a user
 router.post('/login', async (req, res) => {
+  console.log(req.body)
 
   try {
     const user = await User.findByCredentials(req.body.email, req.body.password);
@@ -60,6 +61,7 @@ router.get('/me', auth, async (req, res) => {
   try {
     res.send(req.user);
   } catch (e) {
+    console.log(e)
     res.status(400).send(e);
   }
 });

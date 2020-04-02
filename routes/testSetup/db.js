@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const User = require("../../models/user");
 const Collection = require("../../models/collection");
 const Thread = require("../../models/thread");
+const Review = require("../../models/review");
 
 const userOneId = new mongoose.Types.ObjectId();
 const userTwoId = new mongoose.Types.ObjectId();
@@ -196,11 +197,81 @@ const invalidThreadTwo = {
   ]
 };
 
+// define some VALID reviews
+const reviewOne = {
+  owner: userOneId,
+  user: userOne.name,
+  _id: collectionOneId,
+  name: `Shin Jinseo dominates (again)`,
+  game: `s3.url-${Math.random().toString()}`,
+  paragraph: `A game between Shin Jinseo and Tang Weixing this last month at the Tengen. White seems
+  behind for a bit at the beginning, but later on just crushes black's main territory, killing a group
+  in the process.`,
+  tags: ["#shinjinseo", "#tangweixing", "#killing", "#tengen"],
+  comments: [
+    {
+      user: userTwo.name,
+      text: `I don't totally understand his strategy at the opening ... but man, what domination.`
+    }
+  ],
+};
+
+const reviewTwo = {
+  owner: userOneId,
+  user: userOne.name,
+  _id: collectionOneId,
+  name: `Shin Jinseo wins a championship`,
+  game: `s3.url-${Math.random().toString()}`,
+  paragraph: `Finally Shin Jinseo is a World Champion!`,
+  tags: ["#shinjinseo", "#champion", "#domination"],
+  comments: [
+    {
+      user: userTwo.name,
+      text: `I don't totally understand his strategy at the opening ... but man, what domination.`
+    }
+  ],
+};
+
+// some INVALID Reviews
+const invalidReviewOne = {
+  owner: userOneId,
+  user: userOne.name,
+  _id: collectionOneId,
+  name: `Shin Jinseo wins a championship`,
+  // game: `s3.url-${Math.random().toString()}`,
+  paragraph: `Finally Shin Jinseo is a World Champion!`,
+  tags: ["#shinjinseo", "#champion", "#domination"],
+  comments: [
+    {
+      user: userTwo.name,
+      text: `I don't totally understand his strategy at the opening ... but man, what domination.`
+    }
+  ],
+};
+
+const invalidReviewTwo = {
+  owner: userOneId,
+  user: userOne.name,
+  _id: collectionOneId,
+  // name: `Shin Jinseo wins a championship`,
+  game: `s3.url-${Math.random().toString()}`,
+  paragraph: `Finally Shin Jinseo is a World Champion!`,
+  tags: ["#shinjinseo", "#champion", "#domination"],
+  comments: [
+    {
+      user: userTwo.name,
+      text: `I don't totally understand his strategy at the opening ... but man, what domination.`
+    }
+  ],
+};
+
+
 // wipe and setup both the User and Collection schemas for testing
 const setupDatabase = async () => {
   await User.deleteMany();
   await Collection.deleteMany();
   await Thread.deleteMany();
+  await Review.deleteMany();
 
   // save users - userOne + userTow
   await new User(userOne).save();
@@ -238,5 +309,9 @@ module.exports = {
   threadTwo,
   invalidThreadOne,
   invalidThreadTwo,
+  reviewOne,
+  reviewTwo,
+  invalidReviewOne,
+  invalidReviewTwo,
   setupDatabase
 };
