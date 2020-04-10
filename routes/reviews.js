@@ -6,6 +6,7 @@ const Review = require('../models/review');
 
 /* POST a new review */
 router.post('/', auth, async (req, res, next) => {
+  console.log('review post received ... checking body')
   // first process the file + save to s3
     // load to s3
 
